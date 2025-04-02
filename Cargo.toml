@@ -4,3 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+axum = { version = "0.8.3", features = ["json", "multipart", "macros"] }
+markdown = "1.0.0-alpha.23"
+maud = { version = "0.27.0", features = ["axum"] }
+serde = { version = "1.0.219", features = ["derive", "serde_derive"] }
+tokio = { version = "1.44.1", features = ["full", "tracing", "test-util"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
