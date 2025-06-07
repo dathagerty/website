@@ -83,7 +83,7 @@ fn header() -> Markup {
 }
 
 #[instrument]
-pub fn footer() -> Markup {
+fn footer() -> Markup {
     info!("rendering footer");
     html! {
         footer #footer {
@@ -97,7 +97,7 @@ pub fn footer() -> Markup {
 
 
 #[instrument]
-pub fn post_content(slug: String) -> Markup {
+fn post_content(slug: String) -> Markup {
     info!(slug, "rendering post content");
     html! {
         "wow it's content for " (slug)
@@ -105,7 +105,7 @@ pub fn post_content(slug: String) -> Markup {
 }
 
 #[instrument]
-pub fn page_content() -> Markup {
+fn page_content() -> Markup {
     info!("rendering page content");
     html! {
         "wow it's a page"
