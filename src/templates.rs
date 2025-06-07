@@ -2,7 +2,9 @@ use maud::{html, Markup, DOCTYPE};
 use crate::flair::{get_tagline, get_word};
 use tracing::{info, instrument};
 
-const COMMIT_HASH: &str = build_info::format!("{} on {}", $.version_control?.git()?.commit_short_id, $.timestamp);
+const COMMIT_HASH: &str = build_info::format!("{}", $.version_control?.git()?.commit_short_id);
+const BUILD_DATE: &str = build_info::format!("{}", $.timestamp.format("%F"));
+const BUILD_TIME: &str = build_info::format!("{}", $.timestamp.format("%_I:%M%P %Z"));
 
 #[instrument]
 pub fn root() -> Markup {
@@ -87,7 +89,7 @@ fn footer() -> Markup {
     info!("rendering footer");
     html! {
         footer #footer {
-            "Built with no emotion because it's automated from the code in commit "
+            "Built on " (BUILD_DATE) " at " (BUILD_TIME) " with no emotion because it's automated from the code in commit "
             a href="https://github.com/dathagerty/website" {
                 (COMMIT_HASH)
             }
