@@ -111,3 +111,19 @@ pub fn page_content() -> Markup {
         "wow it's a page"
     }
 }
+
+#[instrument]
+fn page_link(href: &str, name: &str) -> Markup {
+    info!(name, "creating link");
+    html! {
+        a href=(href) { (name) }
+    }
+}
+
+#[instrument]
+fn me_link(href: &str, name: &str) -> Markup {
+    info!(name, "creating me link");
+    html! {
+        a href=(href) rel="me" { (name) }
+    }
+}
