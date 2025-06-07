@@ -64,19 +64,19 @@ fn header() -> Markup {
             }
             h2 { (get_tagline()) }
             nav {
-                a href="/about" { "about" }
+                (page_link("/about", "about"))
                 " "
-                a href="/blag" { "blag" }
+                (page_link("/blag", "blag"))
                 " | "
-                a href="https://hachyderm.io/@dathagerty" rel="me" { "mastodon" }
+                (me_link("https://hachyderm.io/@dathagerty", "mastodon"))
                 " "
-                a href="https://bsky.app/profile/dathagerty.com" rel="me" { "bsky" }
+                (me_link("https://bsky.app/profile/dathagerty.com", "bsky"))
                 " "
-                a href="https://dathagerty.omg.lol" rel="me" { "omg.lol" }
+                (me_link("https://dathagerty.omg.lol", "omg.lol"))
                 " "
-                a href="https://github.com/dathagerty" rel="me" { "github" }
+                (me_link("https://github.com/dathagerty", "github"))
                 " "
-                a href="https://git.sr.ht/~gloatingfiddle" rel="me" { "sr.ht" }
+                (me_link("https://git.sr.ht/~gloatingfiddle", "sr.ht"))
             }
         }
     }
