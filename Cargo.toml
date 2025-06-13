@@ -8,6 +8,7 @@ build = "build.rs"
 [dependencies]
 axum = { version = "0.8.3", features = ["json", "multipart", "macros"] }
 build-info = "0.0.40"
+config = "0.14"
 markdown = "1.0.0-alpha.23"
 maud = { version = "0.27.0", features = ["axum"] }
 serde = { version = "1.0.219", features = ["derive", "serde_derive"] }

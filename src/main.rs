@@ -1,20 +1,27 @@
-use axum::{extract::Path, response::IntoResponse, routing::get, Router};
-use tracing::{info, instrument};
+use axum::{Router, extract::Path, response::IntoResponse, routing::get};
 use build_info::build_info;
+use tracing::{info, instrument};
 
+mod config;
 mod flair;
 mod templates;
 
 build_info!(fn version);
 
+const COMMIT_SHORT: &str = build_info::format!("{}", $.version_control?.git()?.commit_short_id);
+
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
 
-    // I know this is a git repository, so let's panic if things don't work for some reason.
-    let vc = version().version_control.as_ref().expect("how is this not a git repository");
+    // Load configuration
+    let server_config = config::ServerConfig::new().unwrap_or_default();
 
-    info!(commit = vc.git().unwrap().commit_short_id, "starting website");
+    info!(
+        commit = COMMIT_SHORT,
+        port = server_config.port,
+        "starting website"
+    );
 
     let site = Router::new()
         .route("/", get(root))
@@ -22,7 +29,9 @@ async fn main() {
         .route("/blag", get(page))
         .route("/blag/{slug}", get(post));
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", server_config.port))
+        .await
+        .unwrap();
     axum::serve(listener, site).await.unwrap();
 }
 
@@ -39,9 +48,7 @@ async fn page() -> impl IntoResponse {
 }
 
 #[instrument]
-async fn post(
-    Path(slug): Path<String>
-) -> impl IntoResponse {
+async fn post(Path(slug): Path<String>) -> impl IntoResponse {
     info!(slug, "serving post");
     templates::post(slug)
 }
