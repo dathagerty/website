@@ -1,0 +1,91 @@
+{
+    "reading": {
+        "current": [
+            "Inverting the Pyramid: The History of Soccer Tactics",
+            "Love + Work"
+        ],
+        "tbr": [
+            "Gideon the Ninth",
+            "Ego is the Enemy",
+            "A Little Hatred"
+        ]
+    },
+    "slogans": [
+        "a constant work in progress",
+        "like a Cold Stone Creamery for cat medicine",
+        "now officially non-GMO",
+        "certified fresh!",
+        "error in main.rs:43 - could not find main thread",
+        "now with 50% more percentages!",
+        "value-sized",
+        "fully Invested",
+        "probably not created by GPT-3",
+        "original version!",
+        "definitely not copying the OG Minecraft splash screen",
+        "i ran out of witty ideas",
+        "loading...",
+        "serving all your powder needs",
+        "didn't invent the chicken, just the chicken empanada",
+        "naturally aspirated",
+        "artificially intelligent",
+        "effectively 10K science per minute",
+        "promoting synergy",
+        "throw some ass, free the mind"
+    ],
+    "words": [
+        "domicile",
+        "deliriums",
+        "dedication",
+        "dawnshard",
+        "directory",
+        "destruction",
+        "dominion",
+        "dude",
+        "disassociation",
+        "dissertation",
+        "dissection",
+        "discourse",
+        "discord",
+        "distribution",
+        "discernment",
+        "donkey",
+        "drudgery",
+        "dog",
+        "dacquoise",
+        "daemon",
+        "dalliance",
+        "data",
+        "dirigible",
+        "deadlift",
+        "dad-bod",
+        "dumbbell",
+        "daiquiris",
+        "descent",
+        "dreadlord",
+        "darkfriend",
+        "derriere"
+    ],
+    "modules": [
+        {
+            "repositoryUrl": "https://git.sr.ht/~gloatingfiddle/exdura",
+            "modulePath": "dathagerty.com/go/exdura",
+            "name": "exdura",
+            "description": "Extra time intervals.",
+            "license": "MIT"
+        },
+        {
+            "repositoryUrl": "https://git.sr.ht/~gloatingfiddle/babelabel",
+            "modulePath": "dathagerty.com/go/babelabel",
+            "name": "babelabel",
+            "description": "A markdown/org amalgamation to enable quick web publishing.",
+            "license": "WTFPL"
+        },
+        {
+            "repositoryUrl": "https://git.sr.ht/~gloatingfiddle/results",
+            "modulePath": "dathagerty.com/go/results",
+            "name": "results",
+            "description": "An attempt to recreate Rust's Result type by abusing generics.",
+            "license": "WTFPL"
+        }
+    ]
+}

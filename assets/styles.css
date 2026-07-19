@@ -1,0 +1,362 @@
+:root {
+    color-scheme: light dark;
+    --rosewater-latte: #dc8a78;
+    --flamingo-latte: #dd7878;
+    --pink-latte: #ea76cb;
+    --mauve-latte: #8839ef;
+    --red-latte: #d20f39;
+    --maroon-latte: #e64553;
+    --peach-latte: #fe640b;
+    --yellow-latte: #df8e1d;
+    --green-latte: #40a02b;
+    --teal-latte: #179299;
+    --sky-latte: #04a5e5;
+    --sapphire-latte: #209fb5;
+    --blue-latte: #1e66f5;
+    --lavender-latte: #7287fd;
+    --text-latte: #4c4f69;
+    --subtext1-latte: #5c5f77;
+    --subtext0-latte: #6c6f85;
+    --overlay2-latte: #7c7f93;
+    --overlay1-latte: #8c8fa1;
+    --overlay0-latte: #9ca0b0;
+    --surface2-latte: #acb0be;
+    --surface1-latte: #bcc0cc;
+    --surface0-latte: #ccd0da;
+    --base-latte: #eff1f5;
+    --mantle-latte: #e6e9ef;
+    --crust-latte: #dce0e8;
+    --link-latte: #005f75;
+    --visited-latte: #6c2bbf;
+    --muted-latte: #5c5f77;
+    --tag-link-latte: #006d8f;
+    --tag-visited-latte: #4f55a8;
+    --rosewater-mocha: #f5e0dc;
+    --flamingo-mocha: #f2cdcd;
+    --pink-mocha: #f5c2e7;
+    --mauve-mocha: #cba6f7;
+    --red-mocha: #f38ba8;
+    --maroon-mocha: #eba0ac;
+    --peach-mocha: #fab387;
+    --yellow-mocha: #f9e2af;
+    --green-mocha: #a6e3a1;
+    --teal-mocha: #94e2d5;
+    --sky-mocha: #89dceb;
+    --sapphire-mocha: #74c7ec;
+    --blue-mocha: #89b4fa;
+    --lavender-mocha: #b4befe;
+    --text-mocha: #cdd6f4;
+    --subtext1-mocha: #bac2de;
+    --subtext0-mocha: #a6adc8;
+    --overlay2-mocha: #9399b2;
+    --overlay1-mocha: #7f849c;
+    --overlay0-mocha: #6c7086;
+    --surface2-mocha: #585b70;
+    --surface1-mocha: #45475a;
+    --surface0-mocha: #313244;
+    --base-mocha: #1e1e2e;
+    --mantle-mocha: #181825;
+    --crust-mocha: #11111b;
+    --theme-color: var(--red-latte);
+    --background-color: var(--mantle-latte);
+    --code-background: var(--base-latte);
+    --text-color: var(--text-latte);
+    --link-color: var(--link-latte);
+    --visited-color: var(--visited-latte);
+    --subheading-color: var(--subtext1-latte);
+    --muted-color: var(--muted-latte);
+    --tag-link-color: var(--tag-link-latte);
+    --tag-visited-color: var(--tag-visited-latte);
+    --rule-color: var(--overlay1-latte);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    overflow-y: scroll;
+}
+
+body {
+    width: min(100%, 80ch);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+    overflow-wrap: break-word;
+}
+
+header,
+main,
+footer {
+    width: 100%;
+}
+
+header,
+footer {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-align: center;
+}
+
+header {
+    padding-top: 1.5rem;
+}
+
+.brand {
+    text-decoration: none;
+}
+
+.brand h1 {
+    margin-bottom: 0.2rem;
+    color: var(--theme-color);
+}
+
+.slogan {
+    margin-top: 0;
+    color: var(--subheading-color);
+    font-weight: 700;
+}
+
+nav {
+    padding-block: 0.5rem 0.75rem;
+    line-height: 1.9;
+}
+
+.identity-links {
+    white-space: normal;
+}
+
+.section-break {
+    position: relative;
+    height: 1.5rem;
+    margin-block: 0.5rem 1.5rem;
+    border-top: medium double var(--rule-color);
+    color: var(--rule-color);
+    text-align: center;
+}
+
+.section-break span {
+    position: relative;
+    top: -0.9rem;
+    display: inline-block;
+    padding-inline: 0.35em;
+    background: var(--background-color);
+    font-size: 1.4rem;
+}
+
+main {
+    min-height: 45vh;
+}
+
+footer {
+    margin: 3.5rem auto 2rem;
+    color: var(--muted-color);
+    font-size: 0.9rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--subheading-color);
+    line-height: 1.25;
+}
+
+a:link {
+    color: var(--link-color);
+}
+
+a:visited {
+    color: var(--visited-color);
+    text-decoration-style: dotted;
+}
+
+a:hover {
+    font-style: italic;
+}
+
+a:focus-visible {
+    border-radius: 0.15rem;
+    outline: 0.2rem solid var(--theme-color);
+    outline-offset: 0.2rem;
+}
+
+hr {
+    margin-block: 1.5rem;
+    border: 0;
+    border-top: medium double var(--rule-color);
+    color: var(--rule-color);
+}
+
+pre {
+    max-width: 100%;
+    padding: 0.8rem 1rem;
+    overflow-x: auto;
+    border: 0.2rem solid var(--overlay2-latte);
+    border-radius: 0.5rem;
+    background: var(--code-background);
+}
+
+code,
+pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:not(pre) > code {
+    padding: 0.1em 0.3em;
+    border-radius: 0.25rem;
+    background: var(--code-background);
+}
+
+img,
+svg,
+table {
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--surface2-latte);
+    text-align: left;
+}
+
+.post-metadata,
+.post-summary,
+.publish-dates,
+.tags {
+    color: var(--muted-color);
+}
+
+.post-metadata p {
+    margin-block: 0.25rem;
+}
+
+.tags a:link {
+    color: var(--tag-link-color);
+}
+
+.tags a:visited {
+    color: var(--tag-visited-color);
+}
+
+.post-list li,
+.module-list li,
+.tag-list li {
+    margin-block: 0.55rem;
+}
+
+.syntax-highlighting {
+    background: var(--crust-latte);
+    color: var(--text-latte);
+}
+
+.syntax-highlighting .comment {
+    color: var(--overlay1-latte);
+    font-style: italic;
+}
+
+.syntax-highlighting .keyword,
+.syntax-highlighting .storage {
+    color: var(--mauve-latte);
+}
+
+.syntax-highlighting .string {
+    color: var(--green-latte);
+}
+
+.syntax-highlighting .constant,
+.syntax-highlighting .numeric {
+    color: var(--peach-latte);
+}
+
+.syntax-highlighting .entity,
+.syntax-highlighting .support {
+    color: var(--blue-latte);
+}
+
+.syntax-highlighting .variable {
+    color: var(--maroon-latte);
+}
+
+@media (max-width: 38rem) {
+    body {
+        padding-inline: 1rem;
+    }
+
+    header {
+        padding-top: 0.75rem;
+    }
+
+    nav {
+        font-size: 0.95rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --theme-color: var(--red-mocha);
+        --background-color: var(--mantle-mocha);
+        --code-background: var(--base-mocha);
+        --text-color: var(--text-mocha);
+        --link-color: var(--sapphire-mocha);
+        --visited-color: var(--mauve-mocha);
+        --subheading-color: var(--subtext1-mocha);
+        --muted-color: var(--subtext0-mocha);
+        --tag-link-color: var(--sky-mocha);
+        --tag-visited-color: var(--lavender-mocha);
+        --rule-color: var(--overlay1-mocha);
+    }
+
+    pre {
+        border-color: var(--overlay2-mocha);
+    }
+
+    th,
+    td {
+        border-color: var(--surface2-mocha);
+    }
+
+    .syntax-highlighting {
+        background: var(--crust-mocha);
+        color: var(--text-mocha);
+    }
+
+    .syntax-highlighting .comment {
+        color: var(--overlay1-mocha);
+    }
+
+    .syntax-highlighting .keyword,
+    .syntax-highlighting .storage {
+        color: var(--mauve-mocha);
+    }
+
+    .syntax-highlighting .string {
+        color: var(--green-mocha);
+    }
+
+    .syntax-highlighting .constant,
+    .syntax-highlighting .numeric {
+        color: var(--peach-mocha);
+    }
+
+    .syntax-highlighting .entity,
+    .syntax-highlighting .support {
+        color: var(--blue-mocha);
+    }
+
+    .syntax-highlighting .variable {
+        color: var(--maroon-mocha);
+    }
+}

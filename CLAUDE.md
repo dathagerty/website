@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal website written in Rust using Axum as the web framework. It's described as the "Grand Rust Rewrite" of the original site. The application serves HTML pages generated with the Maud templating library and uses structured logging with tracing.
+This is a personal website written in Rust using Topcoat. The application serves server-rendered HTML, embeds its content and assets in release artifacts, and uses structured logging with tracing.
 
 ## Commands
 
@@ -13,11 +13,12 @@ This is a personal website written in Rust using Axum as the web framework. It's
 # Build the project
 cargo build
 
-# Run the development server (default port 3000)
-cargo run
+# Run the development server with asset rebuilding (default port 3000)
+topcoat dev --bin dathagerty
 
-# Build for release
-cargo build --release
+# Build the release binary and matching asset bundle
+cargo build --locked --release --bin dathagerty
+topcoat asset bundle --release --bin dathagerty
 
 # Run tests
 cargo test
@@ -28,18 +29,12 @@ cargo check
 # Format code
 cargo fmt
 
-# Run clipper linter
+# Run Clippy linter
 cargo clippy
 ```
 
 ### Configuration
-The server looks for an optional `config.json` file with:
-```json
-{
-  "port": 3000
-}
-```
-If not present, defaults to port 3000.
+The server reads `PORT` (default `3000`), `INCLUDE_DRAFTS` (default `false`), and `RUST_LOG` (default `info`) from the environment. Invalid values fail startup.
 
 ### Changelog Generation
 ```bash
@@ -51,71 +46,42 @@ git cliff
 
 ### Application Structure
 
-**src/main.rs**: Entry point that:
-- Initializes tracing subscriber for structured logging
-- Loads server configuration from optional `config.json` (defaults to port 3000)
-- Sets up Axum router with routes: `/`, `/about`, `/blag`, `/blag/{slug}`
-- Binds to `0.0.0.0:{port}` and serves the application
-- All route handlers are instrumented with tracing
+**src/main.rs**: Entry point that initializes JSON tracing, validates embedded content, loads and validates the required stylesheet in the Topcoat asset bundle, binds to `0.0.0.0:$PORT`, and serves until graceful shutdown. In-flight connections receive a 10-second drain window before process exit.
 
-**src/templates.rs**: HTML generation using Maud templates:
-- All rendering functions use Maud's `html!` macro for type-safe HTML
-- Three main page types: `root()`, `page()`, and `post(slug)`
-- Common components: `head()`, `header()`, `footer()`
-- Build metadata embedded via `build_info` crate (commit hash, build date/time)
-- Helper functions for links: `page_link()` and `me_link()` (with rel="me")
+**src/content/**: Typed Markdown/JSON parsing and the asynchronous `ContentRepository` boundary. `EmbeddedContentRepository` validates all embedded content at startup and builds deterministic indexes.
 
-**src/config.rs**: Configuration management:
-- `ServerConfig` struct with single field: `port: u16`
-- Loads from optional `config.json` file using the `config` crate
-- Provides `Default` implementation (port 3000)
+**src/routes/**: Explicit Topcoat route registration and thin handlers for pages, posts, tags, Go modules, errors, and `/healthz`.
 
-**src/flair/mod.rs**: Site branding/personality:
-- `get_word()`: Returns the site name modifier (currently "deliriums")
-- `get_tagline()`: Returns the site tagline (currently "a little rusty")
+**src/views/**: Topcoat layouts and components. The root layout owns the document shell, route metadata, navigation, footer, and content-hashed stylesheet reference.
 
 **build.rs**: Build-time code generation:
-- Calls `build_info_build::build_script()` to generate build metadata
-- This enables embedding git commit info and timestamps in the binary
+- Calls `build_info_build::build_script()` to generate local Git metadata
+- Tracks `RAILWAY_GIT_COMMIT_SHA` so Docker/Railway revision injection rebuilds metadata consumers
 
 ### Key Dependencies
 
-- **axum**: Web framework (v0.8.3) with JSON and multipart support
-- **maud**: Type-safe HTML templating (v0.27.0) with Axum integration
-- **tokio**: Async runtime (v1.44.1) with full features
+- **topcoat**: Web framework and type-safe view system (pinned to v0.1.3)
+- **tokio**: Async runtime
 - **tracing/tracing-subscriber**: Structured logging
-- **config**: Configuration file management (v0.14)
 - **build-info**: Embeds build metadata in the binary
-- **markdown**: Markdown parsing (v1.0.0-alpha.23, currently unused)
+- **comrak**: Markdown parsing and syntax highlighting
+- **rust-embed**: Embeds pages, posts, and site data in the binary
 
 ### Content Directory
 
-`content/`: Currently empty (just a .keep file), intended for blog posts and page content. The post rendering is stubbed out with placeholder text.
+`content/` contains Markdown pages and posts plus JSON branding and Go-module metadata. All content is embedded and validated at startup.
 
 ### Routing Pattern
 
-The application uses a simple, flat routing structure:
-- `/` -> `root()` handler
-- `/about` -> `page()` handler
-- `/blag` -> `page()` handler (blog listing)
-- `/blag/{slug}` -> `post(slug)` handler (individual blog posts)
-
-Note: The `page()` and `post()` handlers currently return placeholder content.
+Routes are registered explicitly for `/`, `/about`, `/reading`, `/blag`, `/blag/{slug}`, `/tags`, `/tags/{tag}`, `/go`, `/go/{module}`, and `/healthz`. Missing content returns HTML 404 responses, and unsupported methods retain HTTP 405 behavior.
 
 ### Build Metadata
 
-The application embeds build information that appears in the footer:
-- Commit short hash via `COMMIT_SHORT` and `COMMIT_HASH` constants
-- Build timestamp (date and time)
-- Uses the `build-info` crate's format macro to extract git metadata
-- Build script in `build.rs` generates this metadata at compile time
+The footer prefers a plausible hexadecimal `RAILWAY_GIT_COMMIT_SHA` embedded at compile time, then falls back to the short Git commit ID from `build_info::build_info!`. It links valid revisions to the repository commit and renders plain `unknown` when neither source is usable. Docker builds should pass `--build-arg RAILWAY_GIT_COMMIT_SHA="$(git rev-parse HEAD)"`; Railway provides that built-in variable automatically after the Dockerfile declares it.
 
 ### Logging
 
-All handlers and most template functions are instrumented with `#[instrument]`:
-- Automatically adds span information to logs
-- Use `info!()`, `debug!()`, etc. macros for logging
-- Structured fields can be added (e.g., `info!(slug, "message")`)
+JSON tracing respects `RUST_LOG`. A router layer records request method, path, response status, and elapsed time, and request-time repository failures are logged through tracing. Startup failures return contextual errors to Rust's termination handling, which writes them to stderr; they are not guaranteed to use the structured JSON subscriber.
 
 ## Commit Message Style
 

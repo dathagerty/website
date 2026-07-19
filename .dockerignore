@@ -1,0 +1,13 @@
+**
+!Cargo.toml
+!Cargo.lock
+!build.rs
+!rust-toolchain.toml
+!assets/
+!assets/**
+!content/
+!content/**
+!src/
+!src/**
+!Dockerfile
+!.dockerignore
