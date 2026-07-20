@@ -83,6 +83,10 @@ The footer prefers a plausible hexadecimal `RAILWAY_GIT_COMMIT_SHA` embedded at 
 
 JSON tracing respects `RUST_LOG`. A router layer records request method, path, response status, and elapsed time, and request-time repository failures are logged through tracing. Startup failures return contextual errors to Rust's termination handling, which writes them to stderr; they are not guaranteed to use the structured JSON subscriber.
 
+## Source Control
+
+This is a jj repository with a colocated Git repository. Use jj operations for source control, including status, diffs, commits, bookmarks, fetching, and pushing; do not use Git commands to mutate repository state.
+
 ## Commit Message Style
 
 This project uses conventional commits with git-cliff for changelog generation:
