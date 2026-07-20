@@ -5,8 +5,8 @@ ENV RAILWAY_GIT_COMMIT_SHA=${RAILWAY_GIT_COMMIT_SHA}
 
 WORKDIR /build
 
-RUN --mount=type=cache,id=dathagerty-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
-    --mount=type=cache,id=dathagerty-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+RUN --mount=type=cache,id=s/f05a578d-b801-404e-844e-3ff09756b5b7-dathagerty-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=s/f05a578d-b801-404e-844e-3ff09756b5b7-dathagerty-cargo-git,target=/usr/local/cargo/git,sharing=locked \
     cargo install --locked --version 0.1.3 topcoat-cli
 
 COPY Cargo.toml Cargo.lock build.rs rust-toolchain.toml ./
@@ -14,9 +14,9 @@ COPY assets ./assets
 COPY content ./content
 COPY src ./src
 
-RUN --mount=type=cache,id=dathagerty-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
-    --mount=type=cache,id=dathagerty-cargo-git,target=/usr/local/cargo/git,sharing=locked \
-    --mount=type=cache,id=dathagerty-target,target=/build/target,sharing=locked \
+RUN --mount=type=cache,id=s/f05a578d-b801-404e-844e-3ff09756b5b7-dathagerty-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=s/f05a578d-b801-404e-844e-3ff09756b5b7-dathagerty-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=s/f05a578d-b801-404e-844e-3ff09756b5b7-dathagerty-target,target=/build/target,sharing=locked \
     cargo build --locked --release --bin dathagerty \
     && topcoat asset bundle --release --bin dathagerty \
     && mkdir -p /out/assets \
